@@ -18,7 +18,7 @@ Route::get('/', function()
 
 Route::group(array('prefix' => 'api', 'before' => 'auth.token'), function() {
 
-	Route::get('/', array('as' => 'me', 'uses' => 'UserController@index'));
+    Route::get('/', array('as' => 'me', 'uses' => 'UserController@index'));
 
 }); 
 
@@ -36,12 +36,13 @@ Route::group(array('prefix' => 'api'), function() {
 
             $user->save();
 
-            return Response::json(array('token' => $token, 'user' => $user->toArray()));
+            return Response::json(array('error' => false, 'token' => $token, 'user' => $user->toArray()));
         }
         catch(Exception $e)
         {
             App::abort(404,$e->getMessage());
         }
     });
+    Route::post('register', array('as' => 'register', 'uses' => 'UserController@register'));
 
 }); 
